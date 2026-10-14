@@ -1,0 +1,29 @@
+# Deploy on Render: Dashboard > New > Blueprint > pick this repository.
+# Render asks for the values marked "sync: false"; paste them there, never in code.
+services:
+  - type: web
+    name: panelprep
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: ELEVENLABS_API_KEY
+        sync: false
+      - key: ELEVENLABS_HR_VOICE_ID
+        sync: false
+      - key: ELEVENLABS_GM_VOICE_ID
+        sync: false
+      - key: ELEVENLABS_SPECIALIST_VOICE_ID
+        sync: false
+      - key: TTS_PROVIDER
+        value: elevenlabs
+      - key: APP_ACCESS_CODE
+        sync: false
+      - key: TRUST_PROXY
+        value: "1"
